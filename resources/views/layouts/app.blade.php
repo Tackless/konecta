@@ -37,8 +37,8 @@
             </main>
         </div>
 
-        <footer>
-            <a href="https://donovan-webp.com">Donovan-WebP</a>
+        <footer class="flex flex-row justify-center items-center p-5">
+            <p>Creado por: <a target="__blank" href="https://donovan-webp.com"> Donovan-WebP</a></p>
         </footer>
 
 

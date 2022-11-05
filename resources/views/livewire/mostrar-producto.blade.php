@@ -10,7 +10,7 @@
             </p>
 
             <p class=" font-bold text-sm uppercase text-gray-800 my-3">Precio: 
-                <span class=" normal-case font-normal">${{ $producto->precio }}</span>
+                <span class=" normal-case font-normal">${{ $producto->precio }} MXN</span>
             </p>
 
             <p class=" font-bold text-sm uppercase text-gray-800 my-3">Peso: 
@@ -34,17 +34,10 @@
         <div class="flex flex-col md:flex-row items-stretch gap-3 mt-5 md:mt-0">
 
             <button 
-                wire:click="$emit('mostrarAlertaAddStock', {{ $producto->id }})" {{-- Para escuchar por un evento --}}
-                class="bg-blue-400 py-2 px-4 rounded-lg text-white text-xs font-bold uppercase text-center"
-            >
-                Agregar Stock
-            </button>
-
-            <button 
                 wire:click="$emit('mostrarAlertaRestStock', {{ $producto->id }})" {{-- Para escuchar por un evento --}}
                 class="bg-green-600 py-2 px-4 rounded-lg text-white text-xs font-bold uppercase text-center"
             >
-                Quitar Stock
+                Registrar Venta
             </button>
     
             <a href="{{ route('edit', $producto->id) }}" class="bg-blue-700 py-2 px-4 rounded-lg text-white text-xs font-bold uppercase text-center">
@@ -61,18 +54,14 @@
         </div>
 
         <h3 class="font-bold text-3xl text-gray-800 my-5">
-            Registros de Entrada y Salida
+            Registros de Venta
         </h3>
 
         <div class="flex flex-col items-stretch gap-3 mt-5 md:mt-0">
             
             @forelse ($registros as $registro)
             @if ($registro->producto_id == $producto->id)
-                @if ($registro->cantidad > 0)
-                    <div class="p-6 bg-blue-400 border-b border-gray-200 md:flex md:justify-between md:items-center">
-                @else
-                    <div class="p-6 bg-green-600 border-b border-gray-200 md:flex md:justify-between md:items-center">
-                @endif
+                <div class="p-6 bg-green-600 border-b border-gray-200 md:flex md:justify-between md:items-center">
                         <div class="md:flex md:flex-row space-x-5 ">
                             <p class=" text-sm text-black font-normal">
                                 Cantidad: {{ $registro->cantidad }}
@@ -125,27 +114,9 @@
         )
     });
 
-    Livewire.on('mostrarAlertaAddStock', productoId => {
-        Swal.fire({
-            title: '¿Cuantas unidades se agregan al stock?',
-            input: 'text',
-            inputLabel: 'Unidades',
-            showCancelButton: true,
-            inputValidator: (value) => {
-                if (isNaN(value) || value <= 0) {
-                    return 'Escribe un número mayor de 0'
-                } else {
-                    Swal.fire(`Se han agregado ${value} unidad(es) correctamente`)
-                    Livewire.emit('agregarStock', productoId, value)
-                }
-                
-            }
-        });
-    });
-
     Livewire.on('mostrarAlertaRestStock', productoId => {
         Swal.fire({
-            title: '¿Cuantas unidades se quitan al stock?',
+            title: '¿Cuantas unidades se vendieron?',
             input: 'text',
             inputLabel: 'Unidades',
             showCancelButton: true,
@@ -153,8 +124,8 @@
                 if (isNaN(value) || value <= 0) {
                     return 'Escribe un número mayor de 0'
                 } else {
-                    Swal.fire(`Se han quitado ${value} unidad(es) correctamente`)
                     Livewire.emit('quitarStock', productoId, value)
+                    // Swal.fire(`Se han vendido ${value} unidad(es) correctamente`)
                 }
                 
             }

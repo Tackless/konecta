@@ -25,28 +25,15 @@ class MostrarProducto extends Component
         return redirect()->route('home');
     }
 
-    public function agregarStock(Producto $producto, $cantidad)
-    {
-        $producto->stock += $cantidad;
-
-        $producto->save();
-
-        Registro::create([
-            'producto_id'   =>  $producto->id,
-            'cantidad'      =>  $cantidad
-        ]);
-
-        session()->flash('mensaje', 'Se añadió el stock correctamente');
-
-        return redirect()->route('home');
-
-    }
-
     public function quitarStock(Producto $producto, $cantidad)
     {
-        $cantidad *= -1;
+        if ($producto->stock < $cantidad) {
+            session()->flash('mensaje', 'No se realizó la venta por falta de stock');
 
-        $producto->stock += $cantidad;
+            return redirect()->route('home');
+        }
+
+        $producto->stock -= $cantidad;
 
         $producto->save();
 
@@ -55,7 +42,7 @@ class MostrarProducto extends Component
             'cantidad'      =>  $cantidad
         ]);
 
-        session()->flash('mensaje', 'Se quitó el stock correctamente');
+        session()->flash('mensaje', 'Se registró la venta correctamente');
 
         return redirect()->route('home');
 

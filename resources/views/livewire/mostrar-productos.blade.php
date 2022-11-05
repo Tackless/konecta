@@ -12,7 +12,7 @@
                     </p>
     
                     <p class=" text-sm text-gray-600 font-normal">
-                        Precio: ${{ $producto->precio }}
+                        Precio: ${{ $producto->precio }} MXN
                     </p>
     
                     <p class=" text-sm text-gray-600 font-normal">

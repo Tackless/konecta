@@ -30,7 +30,7 @@
 
     <div class="">
         <label class="block text-sm text-gray-500 font-bold uppercase mb-2" for="precio">
-            Precio:  
+            Precio MXN:  
         </label>
 
         <input id="precio" class="block mt-1 w-full rounded-md shadow-sm border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" type="number" min="0" wire:model="precio" :value="old('precio')" placeholder="Precio">
